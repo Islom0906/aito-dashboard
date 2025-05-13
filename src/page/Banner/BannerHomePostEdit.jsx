@@ -86,7 +86,6 @@ const BannerHomePostEdit = () => {
                 acceleration: editBannerHomeData?.acceleration,
                 car: editBannerHomeData?.car?._id
             }
-            console.log(edit)
 
 
             setFileListProps(video)

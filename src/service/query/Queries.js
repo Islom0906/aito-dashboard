@@ -79,7 +79,7 @@ export const useEditQuery=()=>{
             message.success('Успешно')
         },
         onError: (error) => {
-            console.log(error.response)
+
             message.error(error.response.data)
             // for (let obj in error.response.data) {
             //     message.error(`${obj}: ${error.response.data[obj][0]}`)

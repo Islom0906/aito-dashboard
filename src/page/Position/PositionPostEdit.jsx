@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo} from 'react';
 import {Button, Card, Col, Form, Row, Select} from "antd";
-import {AppLoader, FormInput} from "../../components";
+import {AppLoader, FormInput, FormInputNumber} from "../../components";
 import {useSelector} from "react-redux";
 import {EditGetById, SetInitialValue, SuccessCreateAndEdit} from "../../hooks";
 import {useEditQuery, useGetByIdQuery, useGetQuery, usePostQuery} from "../../service/query/Queries";
@@ -11,6 +11,7 @@ const cardStye = {border: 1, borderStyle: "dashed", borderColor: "black"}
 const initialValueForm = {
     titleRu: "",
     titleUz: "",
+    price:null,
     list: [
         {
             titleRu: "",
@@ -63,18 +64,18 @@ const CategoryPostEdit = () => {
     //edit position
     useEffect(() => {
         if (editPositionSuccess) {
-            const listCopy=editPositionData.list.map(list=>(
+            const listCopy=editPositionData?.list?.map(list=>(
                 {
-                    titleRu: list.titleRu,
-                    titleUz: list.titleUz
+                    titleRu: list?.titleRu,
+                    titleUz: list?.titleUz
                 }
             ))
-            console.log(listCopy)
             const edit = {
-                titleRu: editPositionData.titleRu,
-                titleUz: editPositionData.titleUz,
+                titleRu: editPositionData?.titleRu,
+                titleUz: editPositionData?.titleUz,
+                price: editPositionData?.price,
                 list: listCopy,
-                carId: editPositionData.carId
+                carId: editPositionData?.carId
             }
 
 
@@ -193,6 +194,14 @@ const CategoryPostEdit = () => {
                                 options={optionsCar}
                             />
                         </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <FormInputNumber
+                            required={true}
+                            required_text={'Пожалуйста, введите цену.'}
+                            label="Цена"
+                            name="price"
+                        />
                     </Col>
                 </Row>
 

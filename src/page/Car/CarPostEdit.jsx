@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Button, Card, Col, Form, Row, Select, Typography, Upload} from "antd";
-import {AppLoader, FormInput, FormTextArea} from "../../components";
+import {AppLoader, FormInput, FormInputNumber, FormTextArea} from "../../components";
 import {useDispatch, useSelector} from "react-redux";
 import {EditGetById, onPreviewImage, SetInitialValue, SuccessCreateAndEdit} from "../../hooks";
 import {useDeleteImagesQuery, useEditQuery, useGetByIdQuery, usePostQuery} from "../../service/query/Queries";
@@ -65,7 +65,6 @@ const CarPostEdit = () => {
 
 
     const onFinish = (value) => {
-        console.log(value)
         const getFileUid = (file) => (Array.isArray(file) ? file[0]?.uid : file?.uid);
         // Process expensive list items
         const exteriorReviewList = value.exteriorReview.list.map((item, ind) => ({
@@ -100,7 +99,6 @@ const CarPostEdit = () => {
             imageHome: getFileUid(fileListProps.imageHome),
         };
 
-        console.log(data)
 
         if (editCarData) {
             putCar({url: '/car', data, id: editId})
@@ -109,7 +107,6 @@ const CarPostEdit = () => {
         }
     }
 
-    console.log(fileListProps)
     // refresh page again get data
     useEffect(() => {
 
@@ -160,7 +157,6 @@ const CarPostEdit = () => {
         let multipleDeleteIndex = null
         if (multiple && file?.status === 'removed') {
             fileListProps[name].map((item, ind) => {
-                console.log(item, newFileList)
                 if (item?.uid === file?.uid) {
                     multipleDeleteIndex = ind
                 }
@@ -251,12 +247,20 @@ const CarPostEdit = () => {
                     <Col span={24}>
                         <Title level={3}>О Баннере</Title>
                     </Col>
-                    <Col span={24}>
+                    <Col span={12}>
                         <FormInput
                             required={true}
                             required_text="Требуется  модель "
                             label="Модель автомобиля"
                             name="name"
+                        />
+                    </Col>
+                    <Col span={12}>
+                        <FormInputNumber
+                            required={true}
+                            required_text="Пожалуйста, введите цену."
+                            label="Начальная цена"
+                            name="price"
                         />
                     </Col>
                     <Col span={12}>

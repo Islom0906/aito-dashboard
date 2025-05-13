@@ -3,8 +3,6 @@ import {UserOutlined} from "@ant-design/icons";
 import {ProfileHoverActive} from "../index";
 
 const AvatarUserProfile = ({ full_name , moduls  , image , key}) => {
-  console.log(full_name)
-  console.log(moduls)
   return (
       <Tooltip
           key={key}

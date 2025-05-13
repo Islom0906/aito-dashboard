@@ -40,6 +40,12 @@ const PositionTable = ({data, deleteHandle}) => {
             render: (text) => <p>{text?.name}</p>,
         },
         {
+            title: 'Цена',
+            dataIndex: 'price',
+            id: 'price',
+            render: (text) => <p>{text}</p>,
+        },
+        {
             title: 'Опции',
             dataIndex: 'list',
             id: 'list',
@@ -47,10 +53,11 @@ const PositionTable = ({data, deleteHandle}) => {
                 {
 
                     text.map(item=>(
-                        <Tag key={item?._id}>{item?.titleRu}</Tag>
+                        <Tag style={{whiteSpace:"wrap"}} className={'line-clamp-1'} key={item?._id}>{item?.titleRu}</Tag>
                     ))
                 }
-            </Space>
+            </Space>,
+            width: 500,
         },
         {
             title: 'Событие',

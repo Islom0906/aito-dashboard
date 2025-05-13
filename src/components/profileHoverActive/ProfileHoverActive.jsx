@@ -3,8 +3,6 @@ import {FaRegUserCircle} from "react-icons/fa";
 import {VscFileSubmodule} from "react-icons/vsc";
 
  const ProfileHoverActive = ({ full_name , moduls }) => {
-   console.log(full_name)
-   console.log(moduls)
   return (
       <Flex vertical={true} gap={5} >
         {

@@ -1,5 +1,6 @@
 export const initialValueForm = {
     name: "",
+    price:null,
     bannerWeb: [],
     bannerRes: [],
     modelDescriptionRu: "",

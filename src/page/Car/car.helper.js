@@ -35,7 +35,6 @@ export const changeFieldValue = (form, name, value, index) => {
     } else if (name === 'interiorReviewListImage') {
 
         const getValueBrand = form.getFieldValue('interiorReview')
-        console.log(getValueBrand)
         if (!getValueBrand.list.length){
             getValueBrand.list=[]
         }
@@ -121,7 +120,6 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                 status: "done",
                 url: `${process.env.REACT_APP_API_URL}/${item?.path}`
             }));
-            console.log(interiorReviewListImage)
 
             const equipmentImage = [{
                 uid: editCarData?.equipment?.image?._id,
@@ -151,22 +149,23 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
 
 
             const edit = {
-                name: editCarData.name,
-                modelDescriptionRu: editCarData.modelDescriptionRu,
-                modelDescriptionUz: editCarData.modelDescriptionUz,
+                name: editCarData?.name,
+                price: editCarData?.price,
+                modelDescriptionRu: editCarData?.modelDescriptionRu,
+                modelDescriptionUz: editCarData?.modelDescriptionUz,
                 bannerWeb,
                 bannerRes,
-                character: editCarData.character.map((item) => ({
+                character: editCarData?.character.map((item) => ({
                     keyRu: item.keyRu,
                     keyUz: item.keyUz,
                     valueRu: item.valueRu,
                     valueUz: item.valueUz,
                 })),
                 exteriorReview: {
-                    textRu: editCarData.exteriorReview.textRu,
-                    textUz: editCarData.exteriorReview.textUz,
+                    textRu: editCarData?.exteriorReview.textRu,
+                    textUz: editCarData?.exteriorReview.textUz,
                     bannerImage: exteriorReviewBanner,
-                    list: editCarData.exteriorReview.list.map((item, index) => ({
+                    list: editCarData?.exteriorReview.list.map((item, index) => ({
                         titleRu: item.titleRu,
                         titleUz: item.titleUz,
                         textRu: item.textRu,
@@ -175,22 +174,22 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                     }))
                 },
                 interiorReview: {
-                    titleRu: editCarData.interiorReview.titleRu,
-                    titleUz: editCarData.interiorReview.titleUz,
-                    textRu: editCarData.interiorReview.textRu,
-                    textUz: editCarData.interiorReview.textUz,
+                    titleRu: editCarData?.interiorReview.titleRu,
+                    titleUz: editCarData?.interiorReview.titleUz,
+                    textRu: editCarData?.interiorReview.textRu,
+                    textUz: editCarData?.interiorReview.textUz,
                     bannerImage: interiorReviewBanner,
                     list:interiorReviewListImage
                 },
                 equipment: {
                     image: equipmentImage,
                     pdf: equipmentPdf,
-                    list: editCarData.equipment.list.map(item=>({
+                    list: editCarData?.equipment.list.map(item=>({
                         textRu: item.textRu,
                         textUz: item.textUz,
                     }))
                 },
-                technicalCharacter:editCarData.technicalCharacter.map((item,index)=>{
+                technicalCharacter:editCarData?.technicalCharacter.map((item,index)=>{
                    return {
                        image:technicalCharacterImage[index],
                        titleRu: item.titleRu,
@@ -199,7 +198,7 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                        textUz:item.textUz
                    }
                 }),
-                safety: editCarData.safety.map((item)=>{
+                safety: editCarData?.safety.map((item)=>{
                     return {
                         titleRu: item.titleRu,
                         titleUz: item.titleUz,
@@ -207,7 +206,7 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                         textUz: item.textUz,
                     }
                 }),
-                isTestDrive: editCarData.isTestDrive,
+                isTestDrive: editCarData?.isTestDrive,
                 imageHome,
 
             };

@@ -15,7 +15,7 @@ import {
     PositionPostEdit,
     Position,
     Exterior,
-    ExteriorPostEdit, InteriorPostEdit, Interior
+    ExteriorPostEdit, InteriorPostEdit, Interior, Questions
 } from "./index";
 import {BiNews} from "react-icons/bi";
 import {TiContacts} from "react-icons/ti";
@@ -23,9 +23,10 @@ import {RiLockPasswordFill} from "react-icons/ri";
 import {IoMdInformationCircle} from "react-icons/io";
 import {FaCar, FaImages} from "react-icons/fa";
 import Car from "./Car";
-import BannerHomePostEdit from "./Banner/BannerHomePostEdit";
+
 import {FaCarOn, FaCarTunnel} from "react-icons/fa6";
 import {MdOutlineFormatListBulleted, MdOutlineMiscellaneousServices} from "react-icons/md";
+import {CiSquareQuestion} from "react-icons/ci";
 
 
 // export const authRole = {
@@ -39,7 +40,7 @@ import {MdOutlineFormatListBulleted, MdOutlineMiscellaneousServices} from "react
 
 export const samplePagesConfigs = [
     {
-        key:1 ,
+        key: 1,
         label: 'Car',
         icon: <FaCar className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
         path: '/car',
@@ -55,7 +56,7 @@ export const samplePagesConfigs = [
         noIndex: true
     },
     {
-        key:2 ,
+        key: 2,
         label: 'Position',
         icon: <MdOutlineFormatListBulleted className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
         path: '/position',
@@ -71,7 +72,7 @@ export const samplePagesConfigs = [
         noIndex: true
     },
     {
-        key:3 ,
+        key: 3,
         label: 'Exterior',
         icon: <FaCarOn className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
         path: '/exterior',
@@ -87,7 +88,7 @@ export const samplePagesConfigs = [
         noIndex: true
     },
     {
-        key:4 ,
+        key: 4,
         label: 'Interior',
         icon: <FaCarTunnel className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
         path: '/interior',
@@ -102,24 +103,8 @@ export const samplePagesConfigs = [
         isBackground: true,
         noIndex: true
     },
-    // {
-    //     key: 2,
-    //     label: 'Категория',
-    //     icon: <PiCarSimpleBold className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
-    //     path: '/category',
-    //     element: Category,
-    //     permittedRole: ["admin"],
-    //     isBackground: true
-    // },
-    // {
-    //     path: '/category/add',
-    //     element: CategoryPostEdit,
-    //     permittedRole: ["admin"],
-    //     isBackground: true,
-    //     noIndex: true
-    // },
     {
-        key:5 ,
+        key: 5,
         label: 'Новости',
         icon: <BiNews className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
         path: '/news',
@@ -135,7 +120,7 @@ export const samplePagesConfigs = [
         noIndex: true
     },
     {
-        key:6 ,
+        key: 6,
         label: 'Сервисе',
         icon: <MdOutlineMiscellaneousServices className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
         path: '/service',
@@ -166,38 +151,6 @@ export const samplePagesConfigs = [
         isBackground: true,
         noIndex: true
     },
-    // {
-    //     key: 5,
-    //     label: 'Баннер категория',
-    //     icon: <FaImages className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
-    //     path: '/banner-category',
-    //     element: BannerCategory,
-    //     permittedRole: ["admin"],
-    //     isBackground: true
-    // },
-    // {
-    //     path: '/banner-category/add',
-    //     element: BannerCategoryPostEdit,
-    //     permittedRole: ["admin"],
-    //     isBackground: true,
-    //     noIndex: true
-    // },
-    // {
-    //     key: 6,
-    //     label: 'Адрес филиала',
-    //     icon: <FaMapMarkerAlt className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
-    //     path: '/map',
-    //     element: Map,
-    //     permittedRole: ["admin"],
-    //     isBackground: true
-    // },
-    // {
-    //     path: '/map/add',
-    //     element: MapPostEdit,
-    //     permittedRole: ["admin"],
-    //     isBackground: true,
-    //     noIndex: true
-    // },
     {
         key: 8,
         label: 'Контакт',
@@ -246,4 +199,6 @@ export const samplePagesConfigs = [
         isBackground: true,
         noIndex: true
     },
+
+
 ];

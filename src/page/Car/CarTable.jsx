@@ -28,7 +28,12 @@ const CarTable = ({data,deleteHandle}) => {
             id: 'name',
             render: (text) => <p>{text}</p>,
         },
-
+        {
+            title: 'Начальная цена',
+            dataIndex: 'price',
+            id: 'price',
+            render: (text) => <p>{text}</p>,
+        },
         {
             title: 'Изображение автомобиля',
             dataIndex: 'imageHome',
