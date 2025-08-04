@@ -18,16 +18,13 @@ import './news.scss'
 const initialValueForm = {
     image: [],
     titleRu: "",
-    titleUz: "",
     textRu: "",
-    textUz: ""
 };
 
 const NewsPostEdit = () => {
     const [form] = Form.useForm();
     const {editId} = useSelector(state => state.query)
     const [fileListProps, setFileListProps] = useState([]);
-    const [editorStatesUz, setEditorStatesUz] = useState(EditorState.createEmpty());
     const [editorStatesRu, setEditorStatesRu] = useState(EditorState.createEmpty());
 
     // query-news
@@ -72,7 +69,6 @@ const NewsPostEdit = () => {
     //edit news
     useEffect(() => {
         if (editNewsSuccess) {
-            const initialEditorUz=EditorState.createWithContent(convertFromHTML(editNewsData.textUz))
             const initialEditorRu=EditorState.createWithContent(convertFromHTML(editNewsData.textRu))
             const image = [{
                 uid: editNewsData?.image?._id,
@@ -85,12 +81,9 @@ const NewsPostEdit = () => {
             const edit = {
                 image,
                 titleRu: editNewsData.titleRu,
-                titleUz: editNewsData.titleUz,
                 textRu: initialEditorRu,
-                textUz: initialEditorUz,
             }
 
-            setEditorStatesUz(initialEditorUz)
             setEditorStatesRu(initialEditorRu)
             setFileListProps(image)
             form.setFieldsValue(edit)
@@ -99,13 +92,10 @@ const NewsPostEdit = () => {
     }, [editNewsData])
 
     const onFinish = (value) => {
-        const itemsWithHtmlContentUz = convertToHTML(editorStatesUz.getCurrentContent());
         const itemsWithHtmlContentRu = convertToHTML(editorStatesRu.getCurrentContent());
         const data={
             titleRu: value.titleRu,
-            titleUz: value.titleUz,
             textRu: itemsWithHtmlContentRu,
-            textUz: itemsWithHtmlContentUz,
             image: fileListProps[0]?.uid
 
         }
@@ -185,9 +175,7 @@ const NewsPostEdit = () => {
 
 
 
-    const onEditorStateChangeUz = (editorState) => {
-        setEditorStatesUz(editorState);
-    };
+
     const onEditorStateChangeRu = (editorState) => {
         setEditorStatesRu(editorState);
     };
@@ -213,7 +201,7 @@ const NewsPostEdit = () => {
                 autoComplete="off"
             >
                 <Row gutter={20}>
-                    <Col span={12}>
+                    <Col span={24}>
                         <FormInput
                             required={true}
                             required_text={'Необходимо ввести название новости Ru'}
@@ -221,15 +209,8 @@ const NewsPostEdit = () => {
                             name={'titleRu'}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text={'Необходимо ввести название новости Uz'}
-                            label={'Название новости Uz'}
-                            name={'titleUz'}
-                        />
-                    </Col>
-                    <Col span={12}>
+
+                    <Col span={24}>
                         <Form.Item
                             label={`Основной текст Ru`}
                             name={"textRu"}
@@ -247,23 +228,7 @@ const NewsPostEdit = () => {
                         </Form.Item>
 
                     </Col>
-                    <Col span={12}>
-                        <Form.Item
-                            label={`Основной текст Uz`}
-                            name={"textUz"}
-                            rules={[
-                                {required: true, message: "Вам необходимо ввести основной текст"}
-                            ]}
-                            style={{width: "100%"}}
-                        >
-                            <Editor
-                                editorState={editorStatesUz}
-                                onEditorStateChange={(state) => onEditorStateChangeUz(state)}
-                                editorClassName="editor-class"
-                                toolbarClassName="toolbar-class"
-                            />
-                        </Form.Item>
-                    </Col>
+
                     <Col span={8}>
                         <Form.Item
                             label='Изображение'

@@ -11,10 +11,10 @@ import {
 
 
 const initialValueForm = {
-    typeCar: "",
-    soldCar: "",
+    saleYear: "",
+    serviceCount: "",
     countCar: "",
-    experience: "",
+    client: "",
 };
 
 const CounterPostEdit = () => {
@@ -58,10 +58,10 @@ const CounterPostEdit = () => {
 
 
             const edit = {
-                typeCar: editCounterData?.typeCar,
-                experience: editCounterData.experience,
+                saleYear: editCounterData?.saleYear,
+                client: editCounterData.client,
                 countCar: editCounterData.countCar,
-                soldCar: editCounterData.soldCar
+                serviceCount: editCounterData.serviceCount
             }
 
 
@@ -72,10 +72,10 @@ const CounterPostEdit = () => {
 
     const onFinish = (value) => {
         const data={
-            typeCar:value?.typeCar,
-            experience:value.experience,
+            saleYear:value?.saleYear,
+            client:value.client,
             countCar:value.countCar,
-            soldCar:value.soldCar
+            serviceCount:value.serviceCount
         }
 
 
@@ -145,18 +145,17 @@ const CounterPostEdit = () => {
                     <Col span={12}>
                         <FormInputNumber
                             required={true}
-                            required_text={'Вам необходимо ввести тип'}
-                            label={'Тип автомобиля'}
-                            name={'typeCar'}
+                            required_text={'Вам необходимо ввести год продажи'}
+                            label={'Год продажи'}
+                            name={'saleYear'}
                         />
                     </Col>
                     <Col span={12}>
                         <FormInputNumber
                             required={true}
-
-                            required_text={'Вам необходимо ввести проданный автомобиль'}
-                            label={'Проданный автомобиль'}
-                            name={'soldCar'}
+                            required_text={'Вам необходимо ввести количество обслуженных автомобилей'}
+                            label={'Количество обслуженных автомобилей'}
+                            name={'serviceCount'}
                         />
                     </Col>
                     <Col span={12}>
@@ -165,21 +164,17 @@ const CounterPostEdit = () => {
                             required_text={'Вам необходимо ввести количество автомобилей'}
                             label={'Количество автомобилей'}
                             name={'countCar'}
-
                         />
                     </Col>
                     <Col span={12}>
                         <FormInputNumber
                             required={true}
-                            required_text={'Вам необходимо ввести опыт работы'}
-                            label={' Опыт работы'}
-                            name={'experience'}
-
+                            required_text={'Вам необходимо ввести количество клиентов'}
+                            label={'Количество клиентов'}
+                            name={'client'}
                         />
                     </Col>
                 </Row>
-
-
                 <Button type="primary" htmlType="submit" style={{width: "100%", marginTop: "20px"}}>
                     {editCounterSuccess ? 'Изменить' : 'Создать'}
                 </Button>

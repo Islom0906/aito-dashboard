@@ -1,6 +1,6 @@
 import {Button, Col,  Row, Typography, Space, Spin} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import BannerHomeTable from "./BannerHomeTable";
+import BannerTable from "./BannerTable";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {editIdQuery} from "../../store/slice/querySlice";
@@ -16,7 +16,7 @@ const BannerHome = () => {
     // delete
     const {mutate,isSuccess,isLoading:deleteLoading}=useDeleteQuery()
     // get
-    const {data,isLoading:getBannerLoading,refetch}=useGetQuery(false,'banner-home-get','/bannerHome/',false)
+    const {data,isLoading:getBannerLoading,refetch}=useGetQuery(false,'banner-get','/banner/',false)
 
 
 
@@ -35,7 +35,7 @@ const BannerHome = () => {
     // add
     const addArticle = () => {
         dispatch(editIdQuery(""));
-        navigate('/banner-home/add');
+        navigate('/banner/add');
     };
 
 
@@ -63,7 +63,7 @@ const BannerHome = () => {
                 <Spin
                     size='medium'
                     spinning={getBannerLoading || deleteLoading}>
-                    <BannerHomeTable
+                    <BannerTable
                         data={data}
                         deleteHandle={deleteHandle}
                     />

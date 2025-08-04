@@ -15,18 +15,20 @@ import {
     PositionPostEdit,
     Position,
     Exterior,
-    ExteriorPostEdit, InteriorPostEdit, Interior, Questions
+    ExteriorPostEdit, InteriorPostEdit, Interior, Questions, MapPostEdit, Map, Counter, CounterPostEdit
 } from "./index";
 import {BiNews} from "react-icons/bi";
 import {TiContacts} from "react-icons/ti";
-import {RiLockPasswordFill} from "react-icons/ri";
+import {RiLockPasswordFill, RiMapPinLine} from "react-icons/ri";
 import {IoMdInformationCircle} from "react-icons/io";
-import {FaCar, FaImages} from "react-icons/fa";
+import {FaCar, FaImages, FaShoppingCart} from "react-icons/fa";
 import Car from "./Car";
 
 import {FaCarOn, FaCarTunnel} from "react-icons/fa6";
 import {MdOutlineFormatListBulleted, MdOutlineMiscellaneousServices} from "react-icons/md";
 import {CiSquareQuestion} from "react-icons/ci";
+import {HiOutlineChartBar} from "react-icons/hi";
+import Order from "./Order";
 
 
 // export const authRole = {
@@ -55,50 +57,35 @@ export const samplePagesConfigs = [
         isBackground: true,
         noIndex: true
     },
-    {
-        key: 2,
-        label: 'Position',
-        icon: <MdOutlineFormatListBulleted className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
-        path: '/position',
-        element: Position,
-        permittedRole: ["admin"],
-        isBackground: true
-    },
-    {
-        path: '/position/add',
-        element: PositionPostEdit,
-        permittedRole: ["admin"],
-        isBackground: true,
-        noIndex: true
-    },
+
     {
         key: 3,
-        label: 'Exterior',
-        icon: <FaCarOn className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
-        path: '/exterior',
-        element: Exterior,
+        label: 'Наши показатели',
+        icon: <HiOutlineChartBar className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
+        path: '/counter',
+        element: Counter,
         permittedRole: ["admin"],
         isBackground: true
     },
     {
-        path: '/exterior/add',
-        element: ExteriorPostEdit,
+        path: '/counter/add',
+        element: CounterPostEdit,
         permittedRole: ["admin"],
         isBackground: true,
         noIndex: true
     },
     {
         key: 4,
-        label: 'Interior',
-        icon: <FaCarTunnel className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
-        path: '/interior',
-        element: Interior,
+        label: 'Дилерский центр',
+        icon: <RiMapPinLine className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
+        path: '/map',
+        element: Map,
         permittedRole: ["admin"],
         isBackground: true
     },
     {
-        path: '/interior/add',
-        element: InteriorPostEdit,
+        path: '/map/add',
+        element: MapPostEdit,
         permittedRole: ["admin"],
         isBackground: true,
         noIndex: true
@@ -198,6 +185,15 @@ export const samplePagesConfigs = [
         permittedRole: ["admin"],
         isBackground: true,
         noIndex: true
+    },
+    {
+        key: 12,
+        label: 'Заказ',
+        icon: <FaShoppingCart className={'icon'} style={{fontSize: 22, height: '100%'}}/>,
+        path: '/order',
+        element: Order,
+        permittedRole: ["admin"],
+        isBackground: true
     },
 
 

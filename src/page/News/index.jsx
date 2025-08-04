@@ -46,7 +46,7 @@ const Index = () => {
         }
 
         const filterData = data?.filter(
-            (data) => data.titleUz.toLowerCase().includes(value.toLowerCase())||data.titleRu.toLowerCase().includes(value.toLowerCase()));
+            (data) => data.titleRu.toLowerCase().includes(value.toLowerCase()));
         setSearch(filterData);
     };
 

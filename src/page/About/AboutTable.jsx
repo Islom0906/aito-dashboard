@@ -22,22 +22,15 @@ const AboutTable = ({data}) => {
     const columns = [
 
         {
-            title: 'Изображение баннер рабочий стол',
-            dataIndex: 'bannerWeb',
-            id: 'bannerWeb',
-            render: (image) => {
-                return (
-                    <Image
-                        width={50}
-                        height={50}
-                        src={`${process.env.REACT_APP_API_URL}/${image.path}`}
-                    />
-                )},
+            title: 'Текст',
+            dataIndex: 'textRu',
+            id: 'textRu',
+            render: (text) => <p>{text}</p>,
         },
         {
-            title: 'Изображение баннер рабочий стол',
-            dataIndex: 'bannerRes',
-            id: 'bannerRes',
+            title: 'Изображение ',
+            dataIndex: 'image',
+            id: 'image',
             render: (image) => {
                 return (
                     <Image

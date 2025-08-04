@@ -12,7 +12,6 @@ import { useEditQuery, useGetByIdQuery, usePostQuery} from "../../service/query/
 const initialValueForm = {
     name: "",
     tgId: "",
-    role: ""
 };
 
 const CategoryPostEdit = () => {
@@ -59,7 +58,6 @@ const CategoryPostEdit = () => {
             const edit = {
                 name: editTgBotData?.name,
                 tgId: editTgBotData?.tgId,
-                role: editTgBotData?.role
             }
 
 
@@ -73,7 +71,7 @@ const CategoryPostEdit = () => {
         const data = {
             name: value?.name,
             tgId: value?.tgId,
-            role: value?.role,
+            role: 'order'
 
         }
 
@@ -112,38 +110,7 @@ const CategoryPostEdit = () => {
         }
     }, []);
 
-    // option
-    const optionsRole = useMemo(() => {
 
-        return [
-            {
-                value: "all",
-                label: "Все роли",
-            },
-            {
-                value: "drive",
-                label: "Тест-драйв",
-            },
-            {
-                value: "dealer",
-                label: "Дилер",
-            },
-            {
-                value: "order",
-                label: "Заказ",
-            },
-            {
-                value: "questions",
-                label: "Вопросы",
-            },
-            {
-                value: "service",
-                label: "Сервисе",
-            },
-        ]
-
-
-    }, []);
 
 
 
@@ -184,27 +151,7 @@ const CategoryPostEdit = () => {
                         />
                     </Col>
 
-                    <Col span={24}>
-                        <Form.Item
-                            label={'Выберите роль'}
-                            name={'role'}
-                            rules={[{
-                                required: true, message: 'Вам нужно выбрать роль'
-                            }]}
-                            wrapperCol={{
-                                span: 24,
-                            }}
-                        >
-                            <Select
-                                style={{
-                                    width: '100%',
-                                }}
-                                placeholder='Выберите одну роль'
-                                optionLabelProp='label'
-                                options={optionsRole}
-                            />
-                        </Form.Item>
-                    </Col>
+
                 </Row>
 
 

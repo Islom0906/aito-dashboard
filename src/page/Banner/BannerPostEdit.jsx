@@ -9,19 +9,15 @@ import {useDeleteImagesQuery, useEditQuery, useGetByIdQuery, usePostQuery} from 
 const initialValueForm = {
     bannerWeb: [],
     bannerRes: [],
-    video: [],
 
-    isVideo:false
 };
 
-const BannerHomePostEdit = () => {
+const BannerPostEdit = () => {
     const [form] = Form.useForm();
     const {editId} = useSelector(state => state.query)
     const [fileListPropsWeb, setFileListPropsWeb] = useState([]);
     const [fileListPropsRes, setFileListPropsRes] = useState([]);
-    const [fileListPropsVideo, setFileListPropsVideo] = useState([]);
     const [isUpload, setIsUpload] = useState("")
-    const [isVideo, setIsVideo] = useState(false)
     // query-banner-home
     const {
         mutate: postBannerHomeMutate,
@@ -34,7 +30,7 @@ const BannerHomePostEdit = () => {
         data: editBannerHomeData,
         refetch: editBannerHomeRefetch,
         isSuccess: editBannerHomeSuccess
-    } = useGetByIdQuery(false, "edit-banner-home", editId, '/bannerHome')
+    } = useGetByIdQuery(false, "edit-banner", editId, '/banner')
     // put-query
     const {
         mutate: putBannerHome,
@@ -54,7 +50,7 @@ const BannerHomePostEdit = () => {
     // ================================ useEffect =============================
 
     // banner-home success
-    SuccessCreateAndEdit(postBannerHomeSuccess, putBannerHomeSuccess, '/banner-home')
+    SuccessCreateAndEdit(postBannerHomeSuccess, putBannerHomeSuccess, '/banner')
     // if edit banner-home
     EditGetById(editBannerHomeRefetch)
     // if no edit banner-home
@@ -64,7 +60,6 @@ const BannerHomePostEdit = () => {
     //edit banner-home
     useEffect(() => {
         if (editBannerHomeSuccess) {
-            const isVideoEdit = editBannerHomeData?.video ? true : false
             const bannerWeb = [{
                 uid: editBannerHomeData?.bannerWeb?._id,
                 name: editBannerHomeData?.bannerWeb?.name,
@@ -77,27 +72,18 @@ const BannerHomePostEdit = () => {
                 status: "done",
                 url: `${process.env.REACT_APP_API_URL}/${editBannerHomeData?.bannerRes?.path}`
             }];
-            const video = [{
-                uid: editBannerHomeData?.video?._id,
-                name: editBannerHomeData?.video?.name,
-                status: "done",
-                url: `${process.env.REACT_APP_API_URL}/${editBannerHomeData?.video?.path}`
-            }];
 
-            if (isVideoEdit) {
-                setIsVideo(true)
-            }
+
+
 
             const edit = {
-                bannerWeb: isVideoEdit ? [] : bannerWeb,
-                bannerRes: isVideoEdit ? [] : bannerRes,
-                video: isVideoEdit ? video : [],
+                bannerWeb: bannerWeb,
+                bannerRes: bannerRes,
             }
 
 
             setFileListPropsWeb(bannerWeb)
             setFileListPropsRes(bannerRes)
-            setFileListPropsVideo(video)
 
             form.setFieldsValue(edit)
         }
@@ -107,16 +93,15 @@ const BannerHomePostEdit = () => {
     const onFinish = (value) => {
 
         const data={
-            bannerWeb: isVideo ? null : fileListPropsWeb[0]?.uid,
-            bannerRes: isVideo ? null : fileListPropsRes[0]?.uid,
-            video: isVideo ? fileListPropsVideo[0]?.uid : null
+            bannerWeb: fileListPropsWeb[0]?.uid,
+            bannerRes: fileListPropsRes[0]?.uid,
         }
 
 
         if (editBannerHomeData) {
-            putBannerHome({url: '/bannerHome', data, id: editId})
+            putBannerHome({url: '/banner', data, id: editId})
         } else {
-            postBannerHomeMutate({url: "/bannerHome", data});
+            postBannerHomeMutate({url: "/banner", data});
         }
 
 
@@ -179,20 +164,7 @@ const BannerHomePostEdit = () => {
             setFileListPropsRes(initialImage);
             setIsUpload("")
         }
-        // video
-        if (imagesUploadSuccess && isUpload === "video") {
-            const initialImage = [...fileListPropsVideo]
-            const uploadImg = {
-                uid: imagesUpload[0]?._id,
-                name: imagesUpload[0]?._id,
-                status: "done",
-                url: `${process.env.REACT_APP_API_URL}/${imagesUpload[0]?.path}`
-            }
-            initialImage.push(uploadImg)
-            form.setFieldsValue({video: [uploadImg]});
-            setFileListPropsVideo(initialImage);
-            setIsUpload("")
-        }
+
     }, [imagesUpload]);
 
     const onChangeImageWeb = ({fileList: newFileList}) => {
@@ -251,45 +223,11 @@ const BannerHomePostEdit = () => {
 
     };
 
-    // res image
-    const onChangeImageVideo = ({fileList: newFileList}) => {
-        const formData = new FormData();
-        if (fileListPropsVideo.length !== 0 || newFileList.length === 0) {
-            form.setFieldsValue({video: []});
-            const id = {
-                ids: [fileListPropsVideo[0]?.uid]
-            };
-            imagesDeleteMutate({url: "/medias", id});
-            setFileListPropsVideo([])
-        } else if (newFileList.length !== 0) {
-            formData.append("media", newFileList[0].originFileObj);
-            imagesUploadMutate({url: "/medias", data: formData});
-            setIsUpload("video")
-        }
-
-    };
-
-    const onChangeIsVideo = (value) => {
-        setIsVideo(value)
-    }
 
 
-    const optionsIsVideo = useMemo(() => {
-
-        return [
-            {
-                value: true,
-                label: 'Видео',
-            },
-            {
-                value: false,
-                label: 'Изображение',
-            },
-
-        ]
 
 
-    }, []);
+
 
 
     return (<div>
@@ -313,54 +251,8 @@ const BannerHomePostEdit = () => {
             >
                 <Row gutter={20}>
 
-                    <Col span={12}>
 
-                        <Form.Item
-                            label={'Выберите медиафайл, который хотите загрузить.'}
-                            name={'isVideo'}
 
-                            rules={[{
-                                required: true, message: 'Вы должны выбрать'
-                            }]}
-                            wrapperCol={{
-                                span: 24,
-                            }}
-                        >
-                            <Select
-                                style={{
-                                    width: '100%',
-                                }}
-                                placeholder='Выберите одну топливо'
-                                optionLabelProp='label'
-                                onChange={onChangeIsVideo}
-                                options={optionsIsVideo}
-                            />
-                        </Form.Item>
-
-                    </Col>
-                    {
-                        isVideo ?
-                            <Col span={8}>
-                                <Form.Item
-                                    label='Видео'
-                                    name={'video'}
-                                    rules={[{required: true, message: 'Требуется видео'}]}>
-                                    {/*<ImgCrop>*/}
-                                    <Upload
-                                        maxCount={1}
-                                        fileList={fileListPropsVideo}
-                                        listType='picture-card'
-                                        onChange={onChangeImageVideo}
-                                        onPreview={onPreviewImage}
-                                        beforeUpload={(file) => checkFormat(file)}
-                                    >
-                                        {fileListPropsVideo.length > 0 ? "" : "Upload"}
-                                    </Upload>
-                                    {/*</ImgCrop>*/}
-                                </Form.Item>
-                            </Col>
-                            :
-                            <>
                                 <Col span={8}>
                                     <Form.Item
                                         label='Изображение Web'
@@ -399,8 +291,6 @@ const BannerHomePostEdit = () => {
                                         {/*</ImgCrop>*/}
                                     </Form.Item>
                                 </Col>
-                            </>
-                    }
 
 
                 </Row>
@@ -413,4 +303,4 @@ const BannerHomePostEdit = () => {
     </div>);
 };
 
-export default BannerHomePostEdit;
+export default BannerPostEdit;

@@ -11,13 +11,10 @@ import './map.scss'
 
 const initialValueForm = {
     nameRu:"",
-    nameUz:"",
     addressRu:"",
-    addressUz:"",
     workingTime:"",
     tel:"",
     latlng:[],
-    link:""
 };
 
 function SetViewOnClick({ coords }) {
@@ -83,13 +80,10 @@ const MapPostEdit = () => {
         if (editMapSuccess) {
             const edit = {
                 nameRu:editMapData.nameRu,
-                nameUz:editMapData.nameUz,
                 addressRu:editMapData.addressRu,
-                addressUz:editMapData.addressUz,
                 workingTime:editMapData.workingTime,
                 tel:editMapData.tel,
                 latlng:[editMapData.lat,editMapData.lng],
-                link:editMapData.link
             }
             setPosition([Number(editMapData.lat),Number(editMapData.lng)])
             form.setFieldsValue(edit)
@@ -100,14 +94,11 @@ const MapPostEdit = () => {
 
         const data = {
             nameRu:value.nameRu,
-            nameUz:value.nameUz,
             addressRu:value.addressRu,
-            addressUz:value.addressUz,
             workingTime:value.workingTime,
             tel:`${value.tel}`,
             lat:`${value.latlng[0]}`,
             lng:`${value.latlng[1]}`,
-            link:value.link
 
         }
 
@@ -171,36 +162,22 @@ const MapPostEdit = () => {
                     <Col span={12}>
                         <FormInput
                             required={true}
-                            required_text={'Ввод названия филиала обязателен Ru!'}
-                            label={'Название филиала Ru'}
+                            required_text={'Ввод названия филиала обязателен !'}
+                            label={'Название филиала '}
                             name={'nameRu'}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text={'Filial nomini kiritish majburiy Uz!'}
-                            label={'Filial nomi Uz'}
-                            name={'nameUz'}
-                        />
-                    </Col>
+
 
                     <Col span={12}>
                         <FormInput
                             required={true}
-                            required_text={'Адрес Ru'}
-                            label={'Требуется адрес Ru!'}
+                            required_text={'Адрес '}
+                            label={'Требуется адрес !'}
                             name={'addressRu'}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text={'Manzilni kiritish shart Uz!'}
-                            label={'Manzil Uz'}
-                            name={'addressUz'}
-                        />
-                    </Col>
+
                     <Col span={12}>
                         <FormInput
                             required={true}
@@ -217,14 +194,7 @@ const MapPostEdit = () => {
                             name={'tel'}
                         />
                     </Col>
-                    <Col span={24}>
-                        <FormInput
-                            required={true}
-                            required_text={'Требуется cсылка на сайт!'}
-                            label={'Ссылка на сайт'}
-                            name={'link'}
-                        />
-                    </Col>
+
                     <Col span={24} >
                         <MapContainer center={position.length>0 ? position:[41.315820, 69.244905]} zoom={5} scrollWheelZoom={true} className={"custom-cursor"}>
                             <TileLayer

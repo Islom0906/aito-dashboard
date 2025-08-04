@@ -21,15 +21,15 @@ const CounterTable = ({data}) => {
 
     const columns = [
         {
-            title: 'Тип автомобиля',
-            dataIndex: 'typeCar',
-            id: 'typeCar',
+            title: 'Год продажи',
+            dataIndex: 'saleYear',
+            id: 'saleYear',
             render: (text) => <p>{text}</p>,
         },
         {
-            title: 'Проданный автомобиль',
-            dataIndex: 'soldCar',
-            id: 'soldCar',
+            title: 'Количество обслуженных авто',
+            dataIndex: 'serviceCount',
+            id: 'serviceCount',
             render: (text) => <p>{text}</p>,
         },
         {
@@ -39,9 +39,9 @@ const CounterTable = ({data}) => {
             render: (text) => <p>{text}</p>,
         },
         {
-            title: 'Опыт работы',
-            dataIndex: 'experience',
-            id: 'experience',
+            title: 'Количество разрешений',
+            dataIndex: 'client',
+            id: 'client',
             render: (text) => <p>{text}</p>,
         },
         {

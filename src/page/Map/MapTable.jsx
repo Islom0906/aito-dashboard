@@ -23,29 +23,19 @@ const MapTable = ({data,deleteHandle}) => {
 
     const columns = [
         {
-            title: 'Имя дилера Ру',
+            title: 'Имя дилера ',
             dataIndex: 'nameRu',
             id: 'nameRu',
             render: (text) => <p>{text}</p>,
         },
+
         {
-            title: 'Имя дилера Uz',
-            dataIndex: 'nameUz',
-            id: 'nameUz',
-            render: (text) => <p>{text}</p>,
-        },
-        {
-            title: 'Адрес Ру',
+            title: 'Адрес ',
             dataIndex: 'addressRu',
             id: 'addressRu',
             render: (text) => <p>{text}</p>,
         },
-        {
-            title: 'Адрес Uz',
-            dataIndex: 'addressUz',
-            id: 'addressUz',
-            render: (text) => <p>{text}</p>,
-        },
+
         {
             title: 'Working Time',
             dataIndex: 'workingTime',

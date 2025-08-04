@@ -44,24 +44,6 @@ export const changeFieldValue = (form, name, value, index) => {
                 ...getValueBrand,
             }
         });
-    } else if (name === 'equipmentImage') {
-
-        const getValueBrand = form.getFieldValue('equipment')
-        getValueBrand.image = value
-        form.setFieldsValue({
-            equipment: {
-                ...getValueBrand,
-            }
-        });
-    } else if (name === 'equipmentPdf') {
-
-        const getValueBrand = form.getFieldValue('equipment')
-        getValueBrand.pdf = value
-        form.setFieldsValue({
-            equipment: {
-                ...getValueBrand,
-            }
-        });
     } else if (name === 'technicalCharacterImage') {
 
         const getValueBrand = form.getFieldValue('technicalCharacter')
@@ -73,6 +55,15 @@ export const changeFieldValue = (form, name, value, index) => {
         });
     } else if (name === 'imageHome') {
         form.setFieldsValue({imageHome: value});
+    } else if (name === 'gallery') {
+        let getValueBrand = form.getFieldValue('gallery')
+        if (!getValueBrand.length){
+            getValueBrand=[]
+        }
+        getValueBrand.push(value)
+        form.setFieldsValue({
+            gallery: getValueBrand,
+        });
     }
 }
 
@@ -121,18 +112,13 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                 url: `${process.env.REACT_APP_API_URL}/${item?.path}`
             }));
 
-            const equipmentImage = [{
-                uid: editCarData?.equipment?.image?._id,
-                name: editCarData?.equipment?.image?.name,
+            const gallery = editCarData.gallery.map(item => ({
+                uid: item?._id,
+                name: item?.name,
                 status: "done",
-                url: `${process.env.REACT_APP_API_URL}/${editCarData.equipment?.image?.path}`
-            }];
-            const equipmentPdf = [{
-                uid: editCarData?.equipment?.pdf?._id,
-                name: editCarData?.equipment?.pdf?.name,
-                status: "done",
-                url: `${process.env.REACT_APP_API_URL}/${editCarData?.equipment?.pdf?.path}`
-            }];
+                url: `${process.env.REACT_APP_API_URL}/${item?.path}`
+            }));
+
             const technicalCharacterImage = editCarData.technicalCharacter.map(item => [{
                 uid: item?.image?._id,
                 name: item?.image?.name,
@@ -147,67 +133,43 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                 url: `${process.env.REACT_APP_API_URL}/${editCarData?.imageHome?.path}`
             }];
 
+            console.log(gallery)
 
             const edit = {
                 name: editCarData?.name,
-                price: editCarData?.price,
-                modelDescriptionRu: editCarData?.modelDescriptionRu,
-                modelDescriptionUz: editCarData?.modelDescriptionUz,
                 bannerWeb,
                 bannerRes,
                 character: editCarData?.character.map((item) => ({
                     keyRu: item.keyRu,
-                    keyUz: item.keyUz,
                     valueRu: item.valueRu,
-                    valueUz: item.valueUz,
                 })),
                 exteriorReview: {
                     textRu: editCarData?.exteriorReview.textRu,
-                    textUz: editCarData?.exteriorReview.textUz,
                     bannerImage: exteriorReviewBanner,
                     list: editCarData?.exteriorReview.list.map((item, index) => ({
                         titleRu: item.titleRu,
-                        titleUz: item.titleUz,
                         textRu: item.textRu,
-                        textUz: item.textUz,
                         image: exteriorReviewListImage[index]
                     }))
                 },
                 interiorReview: {
                     titleRu: editCarData?.interiorReview.titleRu,
-                    titleUz: editCarData?.interiorReview.titleUz,
                     textRu: editCarData?.interiorReview.textRu,
-                    textUz: editCarData?.interiorReview.textUz,
                     bannerImage: interiorReviewBanner,
                     list:interiorReviewListImage
                 },
-                equipment: {
-                    image: equipmentImage,
-                    pdf: equipmentPdf,
-                    list: editCarData?.equipment.list.map(item=>({
+                equipment: editCarData?.equipment.map(item => ({
                         textRu: item.textRu,
-                        textUz: item.textUz,
-                    }))
-                },
+                })),
                 technicalCharacter:editCarData?.technicalCharacter.map((item,index)=>{
                    return {
                        image:technicalCharacterImage[index],
                        titleRu: item.titleRu,
-                       titleUz: item.titleUz,
                        textRu:item.textRu,
-                       textUz:item.textUz
                    }
                 }),
-                safety: editCarData?.safety.map((item)=>{
-                    return {
-                        titleRu: item.titleRu,
-                        titleUz: item.titleUz,
-                        textRu: item.textRu,
-                        textUz: item.textUz,
-                    }
-                }),
-                isTestDrive: editCarData?.isTestDrive,
                 imageHome,
+                gallery
 
             };
             setFileListProps({
@@ -217,10 +179,9 @@ export const EditCar = (form, setFileListProps, editCarData, editCarSuccess) => 
                     exteriorReviewListImage,
                     interiorReviewBanner,
                     interiorReviewListImage,
-                    equipmentImage,
-                    equipmentPdf,
                     technicalCharacterImage,
                     imageHome,
+                    gallery
                 }
             );
 

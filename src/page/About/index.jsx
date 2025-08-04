@@ -44,7 +44,7 @@ const About = () => {
 
                     <Col offset={16} span={8}>
                         <Button
-                            disabled={data?.bannerWeb}
+                            disabled={data?.image}
                             type='primary'
                             icon={<PlusOutlined/>}
                             style={{width: '100%'}}

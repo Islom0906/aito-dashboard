@@ -34,10 +34,10 @@ const AppHeader = () => {
           <Flex style={{width:'150px'}} align={"center"} justify={"center"}>
               {
                   systemMode === 'light' ?
-                      <img src={'/admin/logo.png'} className={'logo'} alt={'logo'}
+                      <img src={'/admin/logo.svg'} className={'logo'} alt={'logo'}
                            style={{width: '100%', height: '100%', objectFit: 'contain'}}/>
                       :
-                      <img src={'/admin/logo.png'} className={'logo'} alt={'logo'}
+                      <img src={'/admin/logo.svg'} className={'logo'} alt={'logo'}
                            style={{width: '100%', height: '100%', objectFit: 'contain'}}/>
               }
           </Flex>

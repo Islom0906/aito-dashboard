@@ -5,10 +5,12 @@ import {editIdQuery} from "../../store/slice/querySlice";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
-const ServiceTable = ({data}) => {
+const ServiceTable = ({data,deleteHandle}) => {
     const navigate=useNavigate()
     const dispatch=useDispatch()
-
+    const Delete = async (id) => {
+        deleteHandle('/service',id)
+    };
 
 
     const Edit = (id) => {
@@ -16,7 +18,6 @@ const ServiceTable = ({data}) => {
         dispatch(editIdQuery(id))
         navigate('/service/add')
     };
-
 
 
     const columns = [
@@ -27,15 +28,15 @@ const ServiceTable = ({data}) => {
             render: (text) => <p>{text}</p>,
         },
         {
-            title: 'Изображение баннер ',
-            dataIndex: 'banner',
-            id: 'banner',
+            title: 'Изображение Icon ',
+            dataIndex: 'icon',
+            id: 'icon',
             render: (image) => {
                 return (
                     <Image
                         width={50}
                         height={50}
-                        src={`${process.env.REACT_APP_API_URL}/${image.path}`}
+                        src={`${process.env.REACT_APP_API_URL}/${image?.path}`}
                     />
                 )},
         },
@@ -50,6 +51,12 @@ const ServiceTable = ({data}) => {
                         type='dashed'
                         out
                         icon={<EditOutlined />}/>
+                    <Popconfirm
+                        title={'Вы уверены, что хотите удалить это?'}
+                        description={'Удалить'}
+                        onConfirm={() => Delete(record._id)}>
+                        <Button  type='primary' danger icon={<DeleteOutlined />} />
+                    </Popconfirm>
                 </Space>
             ),
         },

@@ -16,6 +16,19 @@ const cardStyle = {border: 1, borderStyle: "dashed", borderColor: "black"}
 
 
 const CarPostEdit = () => {
+
+    const imageInitial = {
+        bannerWeb: [],
+        bannerRes: [],
+        exteriorReviewBanner: [],
+        exteriorReviewListImage: [[]],
+        interiorReviewBanner: [],
+        interiorReviewListImage: [],
+        technicalCharacterImage: [[]],
+        gallery: [],
+        imageHome: [],
+    }
+
     const [form] = Form.useForm();
     const {editId} = useSelector(state => state.query)
     const dispatch = useDispatch()
@@ -58,7 +71,12 @@ const CarPostEdit = () => {
     EditGetById(editCarRefetch)
     // if no edit car
     SetInitialValue(form, initialValueForm)
-
+    useEffect(() => {
+        if (editId === "") {
+            console.log('render',imageInitial)
+            setFileListProps(imageInitial)
+        }
+    }, []);
 
     //edit car
     EditCar(form, setFileListProps, editCarData, editCarSuccess)
@@ -87,16 +105,12 @@ const CarPostEdit = () => {
                 bannerImage: getFileUid(fileListProps.interiorReviewBanner),
                 list: interiorReviewList
             },
-            equipment: {
-                ...value.equipment,
-                image: getFileUid(fileListProps.equipmentImage),
-                pdf: getFileUid(fileListProps.equipmentPdf),
-            },
             technicalCharacter: value.technicalCharacter.map((item, index) => ({
                 ...item,
                 image: getFileUid(fileListProps.technicalCharacterImage[index]),
             })),
             imageHome: getFileUid(fileListProps.imageHome),
+            gallery: fileListProps.gallery.map(image=>getFileUid(image)) ,
         };
 
 
@@ -211,23 +225,7 @@ const CarPostEdit = () => {
 
         remove(name);
     };
-    // option
-    const optionsTestDrive = useMemo(() => {
 
-        return [
-            {
-                value: true,
-                label: 'Да, есть',
-            },
-            {
-                value: false,
-                label: 'Нет',
-            },
-
-        ]
-
-
-    }, []);
 
 
     return (<div>
@@ -255,14 +253,7 @@ const CarPostEdit = () => {
                             name="name"
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormInputNumber
-                            required={true}
-                            required_text="Пожалуйста, введите цену."
-                            label="Начальная цена"
-                            name="price"
-                        />
-                    </Col>
+
                     <Col span={12}>
                         <Form.Item
                             label="Изображение баннера Web"
@@ -300,22 +291,7 @@ const CarPostEdit = () => {
                         </Form.Item>
                     </Col>
 
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text="Требуется описание модели (RU)"
-                            label="Описание модели (RU)"
-                            name="modelDescriptionRu"
-                        />
-                    </Col>
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text="Требуется описание модели (UZ)"
-                            label="Описание модели (UZ)"
-                            name="modelDescriptionUz"
-                        />
-                    </Col>
+
 
                     <Col span={24}>
                         <Title level={3}>Характеристики</Title>
@@ -337,14 +313,7 @@ const CarPostEdit = () => {
                                                         name={[field.name, "keyRu"]}
                                                     />
                                                 </Col>
-                                                <Col span={12}>
-                                                    <FormInput
-                                                        required={true}
-                                                        required_text="Требуется ключ Uz"
-                                                        label={`Ключ #${index + 1} (UZ)`}
-                                                        name={[field.name, "keyUz"]}
-                                                    />
-                                                </Col>
+
                                                 <Col span={12}>
                                                     <FormInput
                                                         required={true}
@@ -353,14 +322,7 @@ const CarPostEdit = () => {
                                                         name={[field.name, "valueRu"]}
                                                     />
                                                 </Col>
-                                                <Col span={12}>
-                                                    <FormInput
-                                                        required={true}
-                                                        required_text="Требуется значение Uz"
-                                                        label={`Значение #${index + 1} (UZ)`}
-                                                        name={[field.name, "valueUz"]}
-                                                    />
-                                                </Col>
+
 
                                                 <Col span={24}>
                                                     {index > 0 && (
@@ -406,7 +368,7 @@ const CarPostEdit = () => {
                         </Form.Item>
                     </Col>
 
-                    <Col span={12}>
+                    <Col span={24}>
                         <FormTextArea
                             required={true}
                             required_text="Требуется текст (RU)"
@@ -414,14 +376,7 @@ const CarPostEdit = () => {
                             name={["exteriorReview", "textRu"]}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormTextArea
-                            required={true}
-                            required_text="Требуется текст (UZ)"
-                            label="Текст (UZ)"
-                            name={["exteriorReview", "textUz"]}
-                        />
-                    </Col>
+
 
                     <Col span={24}>
                         <Card bordered={true} style={cardStyle}>
@@ -439,14 +394,7 @@ const CarPostEdit = () => {
                                                     name={[field.name, "titleRu"]}
                                                 />
                                             </Col>
-                                            <Col span={12}>
-                                                <FormInput
-                                                    required={true}
-                                                    required_text="Требуется название Uz"
-                                                    label={`Название #${index + 1} (UZ)`}
-                                                    name={[field.name, "titleUz"]}
-                                                />
-                                            </Col>
+
                                             <Col span={12}>
                                                 <FormTextArea
                                                     required={true}
@@ -455,14 +403,7 @@ const CarPostEdit = () => {
                                                     name={[field.name, "textRu"]}
                                                 />
                                             </Col>
-                                            <Col span={12}>
-                                                <FormTextArea
-                                                    required={true}
-                                                    required_text="Требуется текст (UZ)"
-                                                    label={`Текст #${index + 1} (UZ)`}
-                                                    name={[field.name, "textUz"]}
-                                                />
-                                            </Col>
+
 
                                             <Col span={12}>
                                                 <Form.Item
@@ -539,14 +480,7 @@ const CarPostEdit = () => {
                             name={["interiorReview", "titleRu"]}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text="Требуется текст Uz"
-                            label="Текст Uz"
-                            name={["interiorReview", "titleUz"]}
-                        />
-                    </Col>
+
                     <Col span={12}>
                         <FormTextArea
                             required={true}
@@ -555,14 +489,7 @@ const CarPostEdit = () => {
                             name={["interiorReview", "textRu"]}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormTextArea
-                            required={true}
-                            required_text="Требуется текст Uz"
-                            label="Текст Uz"
-                            name={["interiorReview", "textUz"]}
-                        />
-                    </Col>
+
                     <Col span={24}>
                         <Form.Item
                             label="Изображение баннера интерьера"
@@ -589,52 +516,18 @@ const CarPostEdit = () => {
                         <Title level={3} style={{marginTop:20}}>Оборудование</Title>
                     </Col>
 
-                    <Col span={12}>
-                        <Form.Item
-                            label="Изображение оборудования"
-                            name={["equipment", "image"]}
-                            rules={[{required: true, message: "Требуется изображение оборудования"}]}
-                        >
-                            <Upload
-                                maxCount={1}
-                                fileList={fileListProps?.equipmentImage}
-                                listType="picture-card"
-                                onChange={(file) => onChangeImage(file, "equipmentImage")}
-                                onPreview={onPreviewImage}
-                                beforeUpload={() => false}
-                            >
-                                {fileListProps?.equipmentImage?.length > 0 ? "" : "Upload"}
-                            </Upload>
-                        </Form.Item>
-                    </Col>
 
-                    <Col span={12}>
-                        <Form.Item
-                            label="PDF файл оборудования"
-                            name={["equipment", "pdf"]}
-                            rules={[{required: true, message: "Требуется PDF файл оборудования"}]}
-                        >
-                            <Upload
-                                maxCount={1}
-                                fileList={fileListProps?.equipmentPdf}
-                                listType="picture-card"
-                                onChange={(file) => onChangeImage(file, "equipmentPdf")}
-                                onPreview={onPreviewImage}
-                                beforeUpload={() => false}
-                            >
-                                {fileListProps?.equipmentPdf?.length > 0 ? "" : "Upload PDF"}
-                            </Upload>
-                        </Form.Item>
-                    </Col>
+
+
 
                     <Col span={24}>
                         <Card bordered={true} style={cardStyle}>
-                            <Form.List name={["equipment", "list"]}>
+                            <Form.List name={["equipment"]}>
                             {(fields, {add, remove}) => (
                                 <>
                                     {fields.map((field, index) => (
                                         <Row key={field.key} gutter={20}>
-                                            <Col span={12}>
+                                            <Col span={24}>
                                                 <FormInput
                                                     required={true}
                                                     required_text="Требуется текст оборудования Ru"
@@ -642,14 +535,7 @@ const CarPostEdit = () => {
                                                     name={[field.name, "textRu"]}
                                                 />
                                             </Col>
-                                            <Col span={12}>
-                                                <FormInput
-                                                    required={true}
-                                                    required_text="Требуется текст оборудования Uz"
-                                                    label={`Текст оборудования #${index + 1} (UZ)`}
-                                                    name={[field.name, "textUz"]}
-                                                />
-                                            </Col>
+
 
                                             <Col span={24}>
                                                 {index > 0 && (
@@ -677,8 +563,8 @@ const CarPostEdit = () => {
                     <Col span={24}>
                         <Title level={3} style={{marginTop:20}}>Технические характеристики</Title>
                     </Col>
+<Col span={24}>
                     <Card bordered={true} style={cardStyle}>
-
                     <Form.List name="technicalCharacter">
                         {(fields, {add, remove}) => (
                             <>
@@ -693,30 +579,7 @@ const CarPostEdit = () => {
                                                 name={[field.name, "titleRu"]}
                                             />
                                         </Col>
-                                        <Col span={12}>
-                                            <FormInput
-                                                required={true}
-                                                required_text="Требуется заголовок Uz"
-                                                label={`Заголовок #${index + 1} (UZ)`}
-                                                name={[field.name, "titleUz"]}
-                                            />
-                                        </Col>
-                                        <Col span={12}>
-                                            <FormInput
-                                                required={true}
-                                                required_text="Требуется текст Ru"
-                                                label={`Текст #${index + 1} (RU)`}
-                                                name={[field.name, "textRu"]}
-                                            />
-                                        </Col>
-                                        <Col span={12}>
-                                            <FormInput
-                                                required={true}
-                                                required_text="Требуется текст Uz"
-                                                label={`Текст #${index + 1} (UZ)`}
-                                                name={[field.name, "textUz"]}
-                                            />
-                                        </Col>
+
 
 
                                         <Col span={12}>
@@ -759,97 +622,13 @@ const CarPostEdit = () => {
                         )}
                     </Form.List>
                     </Card>
+</Col>
 
 
-                    {/* Безопасность (Safety) */}
-                    <Col span={24}>
-                        <Title level={3} style={{marginTop:20}}>Безопасность</Title>
-                    </Col>
-                    <Col span={24}>
-                        <Card bordered={true} style={cardStyle}>
-
-                            <Form.List name="safety">
-                                {(fields, {add, remove}) => (
-                                    <>
-                                        {fields.map((field, index) => (
-                                            <Row key={field.key} gutter={20}>
-                                                <Col span={12}>
-                                                    <FormInput
-                                                        required={true}
-                                                        required_text="Требуется заголовок безопасности Ru"
-                                                        label={`Заголовок безопасности #${index + 1} (RU)`}
-                                                        name={[field.name, "titleRu"]}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <FormInput
-                                                        required={true}
-                                                        required_text="Требуется заголовок безопасности Uz"
-                                                        label={`Заголовок безопасности #${index + 1} (UZ)`}
-                                                        name={[field.name, "titleUz"]}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <FormTextArea
-                                                        required={true}
-                                                        required_text="Требуется текст безопасности Ru"
-                                                        label={`Текст безопасности #${index + 1} (RU)`}
-                                                        name={[field.name, "textRu"]}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <FormTextArea
-                                                        required={true}
-                                                        required_text="Требуется текст безопасности Uz"
-                                                        label={`Текст безопасности #${index + 1} (UZ)`}
-                                                        name={[field.name, "textUz"]}
-                                                    />
-                                                </Col>
-
-                                                <Col span={24}>
-                                                    {index > 0 && (
-                                                        <Button type="danger" onClick={() => remove(field.name)}>
-                                                            Удалить
-                                                        </Button>
-                                                    )}
-                                                </Col>
-                                            </Row>
-                                        ))}
-
-                                        <Form.Item>
-                                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
-                                                Добавить характеристику
-                                            </Button>
-                                        </Form.Item>
-                                    </>
-                                )}
-                            </Form.List>
-                        </Card>
-                    </Col>
 
 
-                    {/* Test Drive */}
-                    <Col span={12}>
-                        <Form.Item
-                            label={'Есть ли тест-драйв?'}
-                            name={'isTestDrive'}
-                            rules={[{
-                                required: true, message: 'Вы должны выбрать'
-                            }]}
-                            wrapperCol={{
-                                span: 24,
-                            }}
-                        >
-                            <Select
-                                style={{
-                                    width: '100%',
-                                }}
-                                placeholder='Выберите одну'
-                                optionLabelProp='label'
-                                options={optionsTestDrive}
-                            />
-                        </Form.Item>
-                    </Col>
+
+
 
                     {/* Изображение Home */}
                     <Col span={12}>
@@ -867,6 +646,25 @@ const CarPostEdit = () => {
                                 beforeUpload={() => false}
                             >
                                 {fileListProps?.imageHome?.length > 0 ? "" : "Upload"}
+                            </Upload>
+                        </Form.Item>
+                    </Col>
+
+                    <Col span={12}>
+                        <Form.Item
+                            label="Изображение галерея"
+                            name="gallery"
+                            rules={[{required: true, message: "Требуется изображение галерея"}]}
+                        >
+                            <Upload
+                                maxCount={10}
+                                fileList={fileListProps?.gallery}
+                                listType="picture-card"
+                                onChange={(file) => onChangeImage(file, "gallery",null,true)}
+                                onPreview={onPreviewImage}
+                                beforeUpload={() => false}
+                            >
+                                {fileListProps?.gallery?.length > 9 ? "" : "Upload"}
                             </Upload>
                         </Form.Item>
                     </Col>

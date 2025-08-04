@@ -28,9 +28,9 @@ const ContactTable = ({data}) => {
             render: (text) => <p>{text}</p>,
         },
         {
-            title: 'Youtube',
-            dataIndex: 'youtube',
-            id: 'youtube',
+            title: 'Email',
+            dataIndex: 'email',
+            id: 'email',
             render: (text) => <p>{text}</p>,
         },
         {

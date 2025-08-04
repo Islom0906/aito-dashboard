@@ -5,18 +5,18 @@ import {editIdQuery} from "../../store/slice/querySlice";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 
-const BannerHomeTable = ({data,deleteHandle}) => {
+const BannerTable = ({data,deleteHandle}) => {
     const navigate=useNavigate()
     const dispatch=useDispatch()
     const Delete = async (id) => {
-        deleteHandle('/bannerHome',id)
+        deleteHandle('/banner',id)
     };
 
 
     const Edit = (id) => {
         localStorage.setItem('editDataId',id)
         dispatch(editIdQuery(id))
-        navigate('/banner-home/add')
+        navigate('/banner/add')
     };
 
 
@@ -101,4 +101,4 @@ const BannerHomeTable = ({data,deleteHandle}) => {
 
 };
 
-export default BannerHomeTable;
+export default BannerTable;

@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {editIdQuery} from "../../store/slice/querySlice";
 import {useNavigate} from "react-router-dom";
-import { useGetQuery} from "../../service/query/Queries";
+import {useDeleteQuery, useGetQuery} from "../../service/query/Queries";
 
 const {Title} = Typography
 
@@ -13,6 +13,9 @@ const {Title} = Typography
 const Service = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const {mutate,isSuccess,isLoading:deleteLoading}=useDeleteQuery()
+
     // get
     const {data,isLoading:getBannerLoading,refetch}=useGetQuery(false,'service-get','/service/',false)
 
@@ -21,8 +24,11 @@ const Service = () => {
 
     useEffect(() => {
         refetch()
-    }, []);
+    }, [isSuccess]);
+    const deleteHandle = (url, id) => {
+        mutate({url, id});
 
+    };
 
 
     // add
@@ -44,7 +50,7 @@ const Service = () => {
 
                     <Col offset={16} span={8}>
                         <Button
-                            disabled={data?.titleRu}
+                            disabled={data?.length>3}
                             type='primary'
                             icon={<PlusOutlined/>}
                             style={{width: '100%'}}
@@ -58,7 +64,8 @@ const Service = () => {
                     size='medium'
                     spinning={getBannerLoading }>
                     <ServiceTable
-                        data={data ? [data]:[]}
+                        data={data}
+                        deleteHandle={deleteHandle}
                     />
                 </Spin>
             </Space>

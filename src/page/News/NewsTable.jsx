@@ -28,12 +28,7 @@ const NewsTable = ({data,deleteHandle}) => {
             id: 'titleRu',
             render: (text) => <p>{text}</p>,
         },
-        {
-            title: 'Название новости Uz',
-            dataIndex: 'titleUz',
-            id: 'titleUz',
-            render: (text) => <p>{text}</p>,
-        },
+
         {
             title: 'Изображение категории',
             dataIndex: 'image',

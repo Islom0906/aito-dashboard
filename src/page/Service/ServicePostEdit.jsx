@@ -9,26 +9,15 @@ import {PlusOutlined} from "@ant-design/icons";
 const {Title} = Typography
 
 const initialValueForm = {
-    banner: [],
+    icon: [],
     titleRu: "",
-    titleUz: "",
     textRu: "",
-    textUz: "",
-    list: [
-        {
-            titleRu: "",
-            titleUz: "",
-            textRu: "",
-            textUz: "",
-            icon: []
-        },
-    ]
+
 }
 
 
 const imageInitial = {
-    banner: [],
-    icon: [[]],
+    icon: [],
 }
 
 
@@ -80,38 +69,24 @@ const ServicePostEdit = () => {
     //edit service
     useEffect(() => {
         if (editServiceSuccess) {
-            const banner = [{
-                uid: editServiceData?.banner?._id,
-                name: editServiceData?.banner?.name,
+            const icon = [{
+                uid: editServiceData?.icon?._id,
+                name: editServiceData?.icon?.name,
                 status: "done",
-                url: `${process.env.REACT_APP_API_URL}/${editServiceData.banner.path}`
+                url: `${process.env.REACT_APP_API_URL}/${editServiceData.icon.path}`
             }];
 
-            const icon = editServiceData.list.map(item => [{
-                uid: item?.icon?._id,
-                name: item?.icon?.name,
-                status: "done",
-                url: `${process.env.REACT_APP_API_URL}/${item?.icon?.path}`
-            }]);
+
 
 
             const edit = {
-                banner,
+                icon,
                 titleRu: editServiceData.titleRu,
-                titleUz: editServiceData.titleUz,
                 textRu: editServiceData.textRu,
-                textUz: editServiceData.textUz,
-                list: editServiceData.list.map((item, index) => ({
-                    titleRu: item.titleRu,
-                    titleUz: item.titleUz,
-                    textRu: item.textRu,
-                    textUz: item.textUz,
-                    icon: icon[index]
-                })),
+
             }
 
             setFileListProps({
-                banner,
                 icon
             })
             form.setFieldsValue(edit)
@@ -122,15 +97,11 @@ const ServicePostEdit = () => {
     const onFinish = (value) => {
         const getFileUid = (file) => (Array.isArray(file) ? file[0]?.uid : file?.uid);
 
-        const list = value.list.map((item, ind) => ({
-            ...item,
-            icon: getFileUid(fileListProps.icon[ind])
-        }));
+
 
         const data = {
             ...value,
-            banner: getFileUid(fileListProps.banner),
-            list
+            icon: getFileUid(fileListProps.icon)
         }
 
         if (editServiceData) {
@@ -160,16 +131,8 @@ const ServicePostEdit = () => {
     // image
 
     const changeFieldValue = (name, value, index) => {
-        if (name === 'banner') {
-            form.setFieldValue({banner: value});
-        } else if (name === 'icon') {
-            const getValueBrand = form.getFieldValue('list')
-            getValueBrand[index].icon = value
-            form.setFieldsValue({
-                list: [
-                    ...getValueBrand,
-                ]
-            });
+        if (name === 'icon') {
+            form.setFieldValue({icon: value});
         }
     }
     useEffect(() => {
@@ -229,21 +192,7 @@ const ServicePostEdit = () => {
 
     };
 
-    const handleRemove = (name, remove, index, fileName) => {
-        const deleteImage = {...fileListProps}
-        const deleteImageUID = deleteImage[fileName][index]
-        if (deleteImageUID) {
 
-            deleteImage[fileName].splice(index, 1)
-            const id = {
-                ids: [deleteImageUID[0]?.uid]
-            };
-            imagesDeleteMutate({url: "/medias", id});
-            setFileListProps(deleteImage)
-        }
-
-        remove(name);
-    };
 
 
     return (<div>
@@ -268,142 +217,43 @@ const ServicePostEdit = () => {
 
 
                 <Row gutter={20}>
-                    <Col span={24}>
 
-                        <Title level={3}>О Баннере</Title>
-                    </Col>
                     <Col span={24}>
                         <Form.Item
-                            label='Изображение баннера '
-                            name={'banner'}
+                            label='Изображение Icon '
+                            name={'icon'}
                             rules={[{required: true, message: 'Требуется изображение'}]}>
                             <Upload
                                 maxCount={1}
-                                fileList={fileListProps?.banner}
+                                fileList={fileListProps?.icon}
                                 listType='picture-card'
-                                onChange={(file) => onChangeImage(file, 'banner', null)}
+                                onChange={(file) => onChangeImage(file, 'icon', null)}
                                 onPreview={onPreviewImage}
                                 beforeUpload={() => false}
                             >
-                                {fileListProps?.banner?.length > 0 ? "" : "Upload"}
+                                {fileListProps?.icon?.length > 0 ? "" : "Upload"}
                             </Upload>
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={24}>
                         <FormInput
                             required={true}
                             required_text={'Требуется сервисе'}
-                            label={'Название сервисе  Ru'}
+                            label={'Название сервисе '}
                             name={'titleRu'}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormInput
-                            required={true}
-                            required_text={'Требуется сервисе'}
-                            label={'Название сервисе  Uz'}
-                            name={'titleUz'}
-                        />
-                    </Col>
-                    <Col span={12}>
+
+                    <Col span={24}>
                         <FormTextArea
                             required={true}
                             required_text={'Требуется описание'}
-                            label={'Краткое описание Ru'}
+                            label={'Краткое описание'}
                             name={'textRu'}
                         />
                     </Col>
-                    <Col span={12}>
-                        <FormTextArea
-                            required={true}
-                            required_text={'Tavsif talab qilinadi'}
-                            label={'Краткое описание Uz'}
-                            name={'textUz'}
-                        />
-                    </Col>
-                    <Col span={24}>
-                        <Row>
-                            <Col span={24} style={{marginTop:20}}>
-                                <Title level={3}>Преимущества обслуживания</Title>
-                            </Col>
-                        </Row>
-                        <Card bordered={true} style={{border: 1, borderStyle: "dashed", borderColor: "black"}}>
-                            <Form.List name="list">
-                                {(fields, {add, remove}) => (
-                                    <>
-                                        {fields.map((field, index) => (
-                                            <Row key={field.key} gutter={20}>
-                                                <Col span={12}>
-                                                    <FormInput
-                                                        required={true}
-                                                        required_text={'Требуется название'}
-                                                        label={`Название предпочтения службы #${index + 1} (RU)`}
-                                                        name={[field.name, 'titleRu']}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <FormInput
-                                                        required={true}
-                                                        required_text={'Требуется название'}
-                                                        label={`Название предпочтения службы #${index + 1} (UZ)`}
-                                                        name={[field.name, 'titleUz']}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <FormTextArea
-                                                        required={true}
-                                                        required_text={'Требуется текст'}
-                                                        label={`Текст предпочтений сервиса #${index + 1} (RU)`}
-                                                        name={[field.name, 'textRu']}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <FormTextArea
-                                                        required={true}
-                                                        required_text={'Требуется текст'}
-                                                        label={`Текст предпочтений сервиса #${index + 1} (UZ)`}
-                                                        name={[field.name, 'textUz']}
-                                                    />
-                                                </Col>
-                                                <Col span={12}>
-                                                    <Form.Item
-                                                        label={`Изображение #${index + 1}`}
-                                                        name={[field.name, 'icon']}
-                                                        rules={[{required: true, message: 'Требуется изображение'}]}
-                                                    >
-                                                        <Upload
-                                                            maxCount={1}
-                                                            fileList={fileListProps?.icon ? fileListProps?.icon[index] : []}
-                                                            listType='picture-card'
-                                                            onChange={(file) => onChangeImage(file, 'icon', index)}
-                                                            onPreview={onPreviewImage}
-                                                            beforeUpload={() => false}
-                                                        >
-                                                            {fileListProps?.icon[index]?.length > 0 ? "" : "Upload"}
-                                                        </Upload>
-                                                    </Form.Item>
-                                                </Col>
 
-                                                <Col span={24}>
-                                                    {index > 0 && (
-                                                        <Button type="danger"
-                                                                onClick={() => handleRemove(field.name, remove, index, 'icon')}>
-                                                            Удалить
-                                                        </Button>
-                                                    )}
-                                                </Col>
-                                            </Row>
-                                        ))}
-                                        <Form.Item>
-                                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined/>}>
-                                                Добавить значение бренда
-                                            </Button>
-                                        </Form.Item>
-                                    </>
-                                )}
-                            </Form.List>
-                        </Card>
-                    </Col>
+
                 </Row>
 
 

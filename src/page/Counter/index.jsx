@@ -42,7 +42,7 @@ const Contact = () => {
                     <Col offset={16} span={8}>
                         <Button
                             type='primary'
-                            disabled={data?.typeCar}
+                            disabled={data?.saleYear}
                             icon={<PlusOutlined/>}
                             style={{width: '100%'}}
                             onClick={addArticle}>

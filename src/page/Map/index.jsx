@@ -46,7 +46,7 @@ const Map = () => {
         }
 
         const filterData = data?.filter(
-            (data) => data.name.toLowerCase().includes(value.toLowerCase()));
+            (data) => data.nameRu.toLowerCase().includes(value.toLowerCase()));
         setSearch(filterData);
     };
 
