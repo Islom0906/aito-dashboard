@@ -1,6 +1,6 @@
 import {Button, Col,  Row, Typography, Space, Spin} from "antd";
 import {PlusOutlined} from "@ant-design/icons";
-import BannerHomeTable from "./BannerHomeTable";
+import CounterTable from "./CounterTable";
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {editIdQuery} from "../../store/slice/querySlice";
@@ -10,32 +10,22 @@ import {useDeleteQuery, useGetQuery} from "../../service/query/Queries";
 const {Title} = Typography
 
 
-const BannerHome = () => {
+const Contact = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    // delete
-    const {mutate,isSuccess,isLoading:deleteLoading}=useDeleteQuery()
     // get
-    const {data,isLoading:getBannerLoading,refetch}=useGetQuery(false,'banner-home-get','/bannerHome/',false)
-
-
-
-    const [isSearch, setIsSearch] = useState(false);
+    const {data,isLoading:getBannerLoading,refetch}=useGetQuery(false,'counter-get','/counter/',false)
 
     useEffect(() => {
         refetch()
-    }, [isSuccess]);
+    }, []);
 
-    // delete
-    const deleteHandle = (url, id) => {
-        mutate({url, id});
 
-    };
 
     // add
     const addArticle = () => {
         dispatch(editIdQuery(""));
-        navigate('/banner-home/add');
+        navigate('/counter/add');
     };
 
 
@@ -45,13 +35,14 @@ const BannerHome = () => {
                 <Row gutter={20}>
                     <Col span={24}>
                         <Title level={2}>
-                            Баннер
+                            Наши показатели
                         </Title>
                     </Col>
 
                     <Col offset={16} span={8}>
                         <Button
                             type='primary'
+                            disabled={data?.typeCar}
                             icon={<PlusOutlined/>}
                             style={{width: '100%'}}
                             onClick={addArticle}>
@@ -62,10 +53,9 @@ const BannerHome = () => {
                 </Row>
                 <Spin
                     size='medium'
-                    spinning={getBannerLoading || deleteLoading}>
-                    <BannerHomeTable
-                        data={data}
-                        deleteHandle={deleteHandle}
+                    spinning={getBannerLoading}>
+                    <CounterTable
+                        data={data ? [data]:[]}
                     />
                 </Spin>
             </Space>
@@ -73,5 +63,5 @@ const BannerHome = () => {
     );
 };
 
-export default BannerHome;
+export default Contact;
 

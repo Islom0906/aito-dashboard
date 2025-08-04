@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Popconfirm, Space, Table} from "antd";
+import {Button, Image, Popconfirm, Space, Table} from "antd";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import {editIdQuery} from "../../store/slice/querySlice";
 import {useNavigate} from "react-router-dom";
@@ -9,51 +9,69 @@ const BannerHomeTable = ({data,deleteHandle}) => {
     const navigate=useNavigate()
     const dispatch=useDispatch()
     const Delete = async (id) => {
-        deleteHandle('/banner', id)
+        deleteHandle('/bannerHome',id)
     };
 
 
     const Edit = (id) => {
         localStorage.setItem('editDataId',id)
         dispatch(editIdQuery(id))
-        navigate('/banner/add')
+        navigate('/banner-home/add')
     };
 
 
 
     const columns = [
+
         {
-            title: 'Резерв мощности',
-            dataIndex: 'powerReserve',
-            id: 'powerReserve',
-            render: (text) => <p>{text}</p>,
+            title: 'Изображение рабочего стола',
+            dataIndex: 'bannerWeb',
+            id: 'bannerWeb',
+            render: (image) => {
+                return image ? (
+                    <Image
+                        width={50}
+                        height={50}
+                        src={`${process.env.REACT_APP_API_URL}/${image.path}`}
+                    />
+                ) : (
+                    <p>No Image</p>
+                );
+            },
         },
         {
-            title: 'Пиковая мощность',
-            dataIndex: 'peakPower',
-            id: 'peakPower',
-            render: (text) => <p>{text}</p>,
-        },
-        {
-            title: 'Ускорение',
-            dataIndex: 'acceleration',
-            id: 'acceleration',
-            render: (text) => <p>{text}</p>,
+            title: 'Изображение мобильное',
+            dataIndex: 'bannerRes',
+            id: 'bannerRes',
+            render: (image) => {
+                return image ? (
+                    <Image
+                        width={50}
+                        height={50}
+                        src={`${process.env.REACT_APP_API_URL}/${image.path}`}
+                    />
+                ) : (
+                    <p>No Image</p>
+                );
+            },
         },
         {
             title: 'Видео',
             dataIndex: 'video',
             id: 'video',
             render: (video) => {
-                return  video && (<video width={100} controls>
+                return video ? (
+                    <video width={100} controls>
                         <source
-                            src={`${process.env.REACT_APP_API_URL}/${video?.path}`}
+                            src={`${process.env.REACT_APP_API_URL}/${video.path}`}
                             type="video/mp4"
                         />
                         Your browser does not support the video tag.
-                    </video>)
-
-            }
+                    </video>
+                ) : (
+                    <p>No Video</p>
+                );
+            },
         },
         {
             title: 'Событие',
